@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
     //
-    public function index(Posts $posts)
+    public function index(Categories $categories)
     {
-        $posts = $posts->getPosts();
-        return view('posts', ['posts' => $posts, 'message' => ""]);
+        $categories = $categories->getCategories();
+        return view('categories', ['categories' => $categories, 'message' => ""]);
     }
-    public function show(string $id, Posts $posts)
+    public function show(string $id, Categories $categories)
     {
-        $post = $posts->getPost($id);
-        if (count($post) == 0) {
-            $posts = $posts->getPosts();
-            return view('posts', ['message' => "Не корректный id поста", 'posts' => $posts]);
+        $categories = $categories->getCategory($id);
+        //var_dump($categories);
+        if (count($categories) == 0) {
+
+            return view('categories', ['message' => "Не корректный id поста", 'categories' => $categories]);
         }
 
 
-        return view('post', ['post' => $post]);
+        return view('category', ['category' => $categories, 'message' => ""]);
     }
 }

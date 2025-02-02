@@ -43,7 +43,7 @@ class Categories
 
     public function getCategory(string $id): array
     {
-        if ((int)$id >= 0 && (int)$id < count($this->categories)) {
+        if ((int)$id > 0 && (int)$id < count($this->categories) + 1) {
             return $this->categories[$id];
         }
         return [];

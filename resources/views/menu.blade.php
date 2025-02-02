@@ -16,6 +16,9 @@
                 <li><a class="nav-link" href="{{ route('posts') }}">Посты</a></li>
             </ul>
             <ul class="navbar-nav me-auto">
+                <li><a class="nav-link" href="{{ route('categories') }}">Категории</a></li>
+            </ul>
+            <ul class="navbar-nav me-auto">
                 <li><a class="nav-link" href="{{ route('admin.index') }}">Админка</a></li>
             </ul>
 

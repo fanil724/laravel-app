@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 Route::view('/', 'index')->name('home');
 Route::prefix('posts')->group(function () {
+    Route::name('')->prefix('categories')->group(function () {
+        Route::get('/', [CategoriesController::class, 'index'])->name('categories');
+        Route::get('/{id}', [CategoriesController::class, 'show'])->name('category');
+    });
     Route::get('/', [PostsController::class, 'index'])->name('posts');
     Route::get('/{id}', [PostsController::class, 'show'])->name('post');
-    Route::name('/categories.')->prefix('categories')->group(function () {
-        Route::get('/', [CategoriesController::class, 'categories'])->name('categories');
-        Route::get('/{id}', [CategoriesController::class, 'category'])->name('category');
-    });
 });
 
 Route::name('admin.')->prefix('admin')->group(function () {
