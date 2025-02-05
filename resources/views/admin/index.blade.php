@@ -1,6 +1,6 @@
-@extends('admin.menu')
+@extends('layouts.admin')
 @section('menu')
-@include('admin.menu')
+@include('layouts.admin')
 @endsection
 @section('content')
 <div class="container">
@@ -11,9 +11,9 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
                     @endif
 
                     <h2>Админка</h2>

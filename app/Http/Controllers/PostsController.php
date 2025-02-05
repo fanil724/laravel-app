@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Posts;
+use App\Models\Post;
 use Illuminate\Http\Request;
+
 
 class PostsController extends Controller
 {
     //
-    public function index(Posts $posts)
+    public function index()
     {
-        $posts = $posts->getPosts();
-        return view('posts', ['posts' => $posts, 'message' => ""]);
+       
+        $posts=Post::all();
+        $posts=Post::paginate(10);
+        return view('posts.index', ['posts' => $posts, 'message' => ""]);
     }
-    public function show(string $id, Posts $posts)
+    public function show(Post $post)
     {
-        $post = $posts->getPost($id);
-        if (count($post) == 0) {
-            $posts = $posts->getPosts();
-            return view('posts', ['message' => "Не корректный id поста", 'posts' => $posts]);
-        }
-
-
-        return view('post', ['post' => $post]);
+      return view('posts.show', ['post' => $post]);
     }
 }
