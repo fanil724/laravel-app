@@ -14,10 +14,10 @@
     <div class="row justify-content-center">
         <h2>Посты категории: {{ $category->name }}</h2>
         @forelse ($category->posts as $post)
-            <div class="card" class="col-sm" style="width: 18rem;">
+            <div class="card h-50 " class="col-sm" style="width: 18rem;">
                 <img src="https://gendalf.ru/upload/iblock/592/r1j9pyiq9zjh0czjnu14dwoks108vdfu/Razrabotka-sayta-_1_.jpg"
                     class="card-img-top" alt="...">
-                <div class="card-body">
+                <div class="card-body ">
                     <h5 class="card-title">{{ $post->title }}</h5>
                     <p class="card-text">{{$post->text}}</p>
                 </div>

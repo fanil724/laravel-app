@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateCategoriesRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -25,22 +26,21 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         return view('admin.categories.edit', [
-            'categories' => $category            
+            'category' => $category            
         ]);
     }
 
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoriesRequest $request, Category $category)
     {
-        $validated = $request->validate([
-            'name' => 'required|min:5|max:255'  
-        ]);
+        $date =$request->validated();
 
-        $category->fill($validated);
+
+        $category->fill($date);
 
         if ($category->save()) {
-            return redirect()->route('admin.categories.show', $category)->with('success', 'Пост успешно изменен!');
+            return redirect()->route('admin.categories.show', $category)->with('success', 'Категория успешно изменена!');
         }
-        return back()->with('error', 'Ошибка изменения поста');
+        return back()->with('error', 'Ошибка изменения категории');
     }
 
     public function store(Request $request)
@@ -48,7 +48,7 @@ class CategoryController extends Controller
         $сategory=null;
         //валидация данных
         $validated = $request->validate([
-            'name' => 'required|min:5|max:255'            
+            'name' => 'unique:categories|required|min:5|max:255'            
         ]);
 
         try {
@@ -63,4 +63,15 @@ class CategoryController extends Controller
     {
       return view('admin.categories.show', ['category' => $category]);
     }
+
+
+    public function destroy(Category $category)
+    {
+
+        if ($category->delete()) {
+            return redirect()->route('admin.categories.index', )->with('success', 'Категория успешно удалена!');
+        }
+        return back()->with('error', 'Ошибка удаления категории');
+    }
+
 }

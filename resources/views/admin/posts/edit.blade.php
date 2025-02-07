@@ -15,7 +15,7 @@
                 <div class="card-header">Изменить пост</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.posts.update', $post) }}">
+                    <form enctype="multipart/form-data" method="POST" action="{{ route('admin.posts.update', $post) }}">
                         @csrf
                         @method('PUT')
                         <div class="row mb-3">
@@ -38,7 +38,6 @@
                                 @enderror
                             </div>
                         </div>
-
 
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">Заголовок поста</label>
@@ -68,7 +67,19 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="image" class="form-label">Изображение</label>
 
+                            <div class="col-md-6">
+                                <input type="file" class="form-control" id="image" name="image">
+
+                            </div>
+                            @error('image')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

@@ -17,9 +17,11 @@ Route::prefix('posts')->group(function () {
     });
     Route::get('/', [PostsController::class, 'index'])->name('posts');
     Route::get('/{post}', [PostsController::class, 'show'])->name('post');
+    
 });
-
-Route::name('admin.')->prefix('admin')->group(function () {
+Route::post('posts/{id}/add/like', [PostsController::class, 'addLike'])->name('posts.like.add');
+Route::name('admin.')->middleware(['auth','is_admin'])
+->prefix('admin')->group(function () {
     Route::get('/', [AdminIndexController::class, 'index'])->name('index');
     Route::name('posts.')->prefix('posts')->group(function () {        
         Route::get('/', [AdminPostController::class, 'index'])->name('index');

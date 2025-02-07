@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $post->title }}</h5>
 
-                    <a href="{{ route('post', $post) }}" class="btn btn-primary">Показать</a>
+                    <a href="{{ route('post', $post) }}" class="btn btn-primary">Показать : {{ $post->likes }}</a>
                 </div>
             </div>
 

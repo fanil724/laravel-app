@@ -9,7 +9,7 @@
 @section('content')
 <div class="container">
     @include('admin.parts.message')
-    <form action="{{ route('admin.posts.store') }}" method="POST">
+    <form action="{{ route('admin.posts.store') }}" enctype="multipart/form-data" method="POST">
         @csrf
         <div class="row mb-3">
             <label for="name" class="col-md-4 col-form-label text-md-end">Категория</label>
@@ -49,6 +49,15 @@
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
+            @enderror
+        </div>
+        <div>
+            <input type="file" class="form-control" name="image" id="image">
+            @error('image')
+            <span class=" invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+
+            </span>
             @enderror
         </div>
         <button type="submit" class="btn btn-primary">Добавить пост</button>
