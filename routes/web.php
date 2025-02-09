@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::prefix('posts')->group(function () {
     
 });
 Route::post('posts/{id}/add/like', [PostsController::class, 'addLike'])->name('posts.like.add');
+
 Route::name('admin.')->middleware(['auth','is_admin'])
 ->prefix('admin')->group(function () {
     Route::get('/', [AdminIndexController::class, 'index'])->name('index');
@@ -40,6 +42,16 @@ Route::name('admin.')->middleware(['auth','is_admin'])
         Route::put('/update/{category}', [AdminCategoryController::class, 'update'])->name('update');
         Route::delete('/destroy/{category}', [AdminCategoryController::class, 'destroy'])->name('destroy');
         Route::get('/{category}', [AdminCategoryController::class, 'show'])->name('show');
+    });
+    Route::name('users.')->prefix('users')->group(function () {
+        Route::get('/', [AdminUserController::class, 'index'])->name('index');      
+        Route::post('/store', [AdminUserController::class, 'store'])->name('store');
+        Route::get('/{user}/edit', [AdminUserController::class, 'edit'])->name('edit');
+        Route::put('/update/{user}', [AdminUserController::class, 'update'])->name('update');
+        Route::delete('/destroy/{user}', [AdminUserController::class, 'destroy'])->name('destroy');     
+        Route::post('/{id}/add/admin', [AdminUserController::class, 'addAdmin'])->name('add'); 
+        Route::get('/create', [AdminUserController::class, 'create'])->name('create');
+        Route::post('/store', [AdminUserController::class, 'store'])->name('store'); 
     });
 });
 

@@ -1,0 +1,104 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateUsersRequest;
+use App\Http\Requests\UpdateUsersRequest;
+use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+use function PHPSTORM_META\map;
+
+class UserController extends Controller
+{
+    public function index(){
+        $userAuth=Auth::user();
+        $users=User::all( ['id','name','email','is_admin']);       
+       $users=User::where('name','!=','admin')
+       ->where('id','!=',$userAuth->id)->paginate(10);
+        return view('admin.users.index', [
+            'users' => $users
+        ]);
+    }
+
+
+    public function create()
+    {      
+        return view('admin.users.create', );
+    }
+  
+    public function edit(User $user)
+    { return view('admin.users.edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function destroy(User $user)
+    {
+      
+        if ($user->delete()) {
+            return redirect()->route('admin.users.index', )->with('success', 'Пользователь успешно удален!');
+        }
+        return back()->with('error', 'Ошибка удаления Пользователя');
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $id_admin=$request->get('is_admin') == 'on' ? 1 : 0;
+        $data = $request->validate([
+            'name' => 'required|min:5|max:255',
+            'email' => 'unique:users,email,'.$user->id.'|required|min:5|max:255'                
+        ]);      
+       
+        
+        $user->is_admin=$id_admin;
+        $user->fill($data);
+        
+        if ($user->update()) {
+            return redirect()->route('admin.users.index', $user)->with('success', 'Пользователь успешно изменен!');
+        }
+
+        return back()->with('error', 'Ошибка изменения Пользователя');
+    }
+
+
+    public function store(CreateUsersRequest $request)
+    {       
+        $id_admin=$request->get('is_admin') == 'on' ? 1 : 0;
+        $validated = $request->validated();
+        $validated['is_admin']=$id_admin;
+       //dd($validated);
+        try {           
+            $post = User::create($validated);
+        } catch (\Exception $e) {
+            return redirect()->route('admin.users.create')->with('error', 'Ошибка добавления пользователя! ' . $e->getMessage());
+        }
+        return redirect()->route('admin.users.index' )->with('success', 'Пользователь успешно добавлен');
+    }
+
+
+
+    public function addAdmin(string $id){
+        $user = User::find($id);
+        if($user){
+          $user->is_admin=(($user->is_admin == 1) ?0:1);
+          if($user->save()){
+          return response()->json([
+            'success'=> 'true',
+            'message'=> 'Статус админа успешно иземенен',            
+          ]);}
+          return response()->json([
+            'success'=> false,
+            'message'=> 'Статус админа не иземенен'],404);
+        
+        }
+  
+        return response()->json([
+          'success'=> false,
+          'message'=> 'Пользователь не найден'],404);
+      }
+
+
+}

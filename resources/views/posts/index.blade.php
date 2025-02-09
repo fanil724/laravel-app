@@ -19,8 +19,11 @@
         @forelse ($posts as $post)
 
             <div class="card" class="col-sm" style="width: 18rem;">
-                <img src="https://gendalf.ru/upload/iblock/592/r1j9pyiq9zjh0czjnu14dwoks108vdfu/Razrabotka-sayta-_1_.jpg"
-                    class="card-img-top" alt="...">
+                @if($post->image)
+                    <img src="{{asset('storage/' . $post->image)}}" class="card-img-top w-60 me-2 float-start" alt="...">
+                @else
+                    <img src="https://серебро.рф/img/placeholder.png" class="card-img-top w-60 me-2 h-50 float-start" alt="...">
+                @endif
                 <div class="card-body">
                     <h5 class="card-title">{{ $post->title }}</h5>
 

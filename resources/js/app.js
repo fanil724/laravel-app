@@ -12,3 +12,19 @@ buttonlike.forEach((elem) => {
 
     })
 });
+
+
+
+
+let checkAdmin = document.querySelectorAll('.checkAdmin');
+checkAdmin.forEach((elem) => {
+    elem.addEventListener('change', () => {
+        let id = elem.getAttribute('data-id');
+        axios.post(`/admin/users/${id}/add/admin`)
+            .then(response => {
+                alert(response.data.message);
+            }).catch(error => {
+                alert(response.data.message);
+            });
+    })
+});
