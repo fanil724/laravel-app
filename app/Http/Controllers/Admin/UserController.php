@@ -14,11 +14,11 @@ use function PHPSTORM_META\map;
 class UserController extends Controller
 {
     public function index(){
-        $userAuth=Auth::user();
-        $users=User::all( ['id','name','email','is_admin']);       
-       $users=User::where('name','!=','admin')
-       ->where('id','!=',$userAuth->id)->paginate(10);
-        return view('admin.users.index', [
+        $userAuth=Auth::user();              
+       $users=User::where([['name','!=','admin'],['id','!=',$userAuth->id]])
+       ->select( ['id','name','email','is_admin'])->paginate(10);
+      
+       return view('admin.users.index', [
             'users' => $users
         ]);
     }
