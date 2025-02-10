@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function create()
     {      
-        return view('admin.users.create', );
+        return view('admin.users.create' );
     }
   
     public function edit(User $user)
@@ -39,7 +39,7 @@ class UserController extends Controller
     {
       
         if ($user->delete()) {
-            return redirect()->route('admin.users.index', )->with('success', 'Пользователь успешно удален!');
+            return redirect()->route('admin.users.index')->with('success', 'Пользователь успешно удален!');
         }
         return back()->with('error', 'Ошибка удаления Пользователя');
     }
@@ -57,7 +57,7 @@ class UserController extends Controller
         $user->fill($data);
         
         if ($user->update()) {
-            return redirect()->route('admin.users.index', $user)->with('success', 'Пользователь успешно изменен!');
+            return redirect()->route('admin.users.index')->with('success', 'Пользователь успешно изменен!');
         }
 
         return back()->with('error', 'Ошибка изменения Пользователя');
