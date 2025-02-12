@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUsersRequest;
-use App\Http\Requests\UpdateUsersRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-use function PHPSTORM_META\map;
+
 
 class UserController extends Controller
 {

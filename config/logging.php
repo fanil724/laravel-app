@@ -57,6 +57,12 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
+        'app' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/observer.log'),
+            'level' => 'info',
+            
+        ],
 
         'single' => [
             'driver' => 'single',

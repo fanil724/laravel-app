@@ -2,6 +2,7 @@ import './bootstrap';
 let buttonlike = document.querySelectorAll('.likeButton');
 buttonlike.forEach((elem) => {
     elem.addEventListener('click', () => {
+
         let id = elem.getAttribute('data-id');
         axios.post(`/posts/${id}/add/like`)
             .then(response => {

@@ -43,9 +43,11 @@
                         <li><a class="nav-link" href="{{ route('categories') }}">Категории</a></li>
                     </ul>
                     @auth
-                        <ul class="navbar-nav me-auto">
-                            <li><a class="nav-link" href="{{ route('admin.index')}}">Админка</a></li>
-                        </ul>
+                        @if (Auth::user()->is_admin)
+                            <ul class="navbar-nav me-auto">
+                                <li><a class="nav-link" href="{{ route('admin.index')}}">Админка</a></li>
+                            </ul>
+                        @endif
                     @endauth
 
                     <!-- Right Side Of Navbar -->
@@ -73,7 +75,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                     document.getElementById('logout-form').submit();">
+                                                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
