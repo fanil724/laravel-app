@@ -6,10 +6,11 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\SocialiteController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
+
 
 Route::view('/', 'index')->name('home');
 Route::prefix('posts')->group(function () {
@@ -55,8 +56,8 @@ Route::name('admin.')->middleware(['auth', 'is_admin'])
         });
     });
 
-
-
+Route::get('/{soc}/redirect', [SocialiteController::class, 'redirect'])->name('auth.redirect');
+Route::get('/{soc}/callback', [SocialiteController::class, 'callback'])->name('auth.callback');
 /*Route::get('/auth/redirect', function () {
     return Socialite::driver('vkontakte')->redirect();
 });
